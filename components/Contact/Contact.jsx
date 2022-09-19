@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaFacebookF,
   FaInstagram,
@@ -7,11 +7,12 @@ import {
 } from "react-icons/fa";
 import Section from "../Section/Section";
 import { z } from "zod";
-import { phoneRegex } from "../../utils/utils";
+import { phoneRegex, addInlineStyles } from "../../utils/utils";
 import { sendContactData } from "../../utils/api";
+import EmailProgressModal from "../EmailProgressModal/EmailProgressModal";
 
 const styles = {
-  section: "relative pb-[7rem] pt-16",
+  section: "relative pb-[7rem] pt-16 border-t-2 border-black border-solid",
   subtitle: "block text-[#f9004d] mb-4 text-center",
   title: "text-[#c4cfde] text-[3.5rem] mb-10 text-center font-bold",
   container: "flex flex-col gap-16 lg:flex-row",
@@ -63,6 +64,18 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+
+    if (isLoading) {
+      addInlineStyles(body, { overflow: "hidden" });
+    } else {
+      addInlineStyles(body, { overflow: "auto" });
+    }
+  }, [isLoading]);
 
   const schema = z.object({
     name: z.string().min(3, { message: "Name is required" }),
@@ -124,10 +137,8 @@ const Contact = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("##form errors", errors, !!errors);
     try {
       if (!errors) {
-        console.log("##form if errors", errors);
         const data = {
           name,
           phone,
@@ -136,9 +147,10 @@ const Contact = () => {
           message,
         };
 
+        // Start loading
+        setIsLoading(true);
         const response = await sendContactData(data);
-        const contactData = await response.data;
-        const status = await response.status;
+        const { data: contactData, status } = await response;
 
         if (status === 200) {
           console.log("##contactData", contactData, statusText);
@@ -148,167 +160,173 @@ const Contact = () => {
     } catch (err) {
       console.log("##Error submitting Contact form", err);
     }
+    // Stop Loading
+    setIsLoading(false);
   };
 
   return (
-    <Section className={styles.section} id="contact">
-      <span className={styles.subtitle}>Contact</span>
-      <h1 className={styles.title}>Contact With Me</h1>
-      <div className={styles.container}>
-        {/* DETAILS */}
-        <div className={styles.connect}>
-          {/* <div className={styles.imageContainer}></div> */}
-          <h2 className={styles.connectHeading}>WebDesignTuts</h2>
-          <span className={styles.connectSpan}>Youtube Creator</span>
-          <span className={styles.connectSpan}>
-            I am available for freelance work. Connect with me via and call in
-            to my account.
-          </span>
-          {/* CONTACT DETAILS */}
-          <div className={styles.contact}>
-            <div>
-              <span className={styles.connectSpan}>Phone:</span>
-              <span className={styles.connectSpan}>+01234567890</span>
+    <>
+      <Section className={styles.section} id="contact">
+        <span className={styles.subtitle}>Contact</span>
+        <h1 className={styles.title}>Contact With Me</h1>
+        <div className={styles.container}>
+          {/* DETAILS */}
+          <div className={styles.connect}>
+            {/* <div className={styles.imageContainer}></div> */}
+            <h2 className={styles.connectHeading}>WebDesignTuts</h2>
+            <span className={styles.connectSpan}>Youtube Creator</span>
+            <span className={styles.connectSpan}>
+              I am available for freelance work. Connect with me via and call in
+              to my account.
+            </span>
+            {/* CONTACT DETAILS */}
+            <div className={styles.contact}>
+              <div>
+                <span className={styles.connectSpan}>Phone:</span>
+                <span className={styles.connectSpan}>+01234567890</span>
+              </div>
+
+              <div>
+                <span className={styles.connectSpan}>Email:</span>
+                <span className={styles.connectSpan}>admin@example.com</span>
+              </div>
             </div>
 
+            {/* SOCIALS */}
             <div>
-              <span className={styles.connectSpan}>Email:</span>
-              <span className={styles.connectSpan}>admin@example.com</span>
+              <span className={styles.connectSpan}>Find Me</span>
+              <div>
+                <ul className={styles.list}>
+                  <li className={styles.listItem}>
+                    <a
+                      href="https://www.facebook.com/"
+                      target={"_blank"}
+                      rel={"noreferrer"}
+                      className={styles.listItemLink}
+                    >
+                      <FaFacebookF className={styles.listSvg} />
+                    </a>
+                  </li>
+                  <li className={styles.listItem}>
+                    <a
+                      href="https://www.instagram.com/"
+                      target={"_blank"}
+                      rel={"noreferrer"}
+                      className={styles.listItemLink}
+                    >
+                      <FaInstagram className={styles.listSvg} />
+                    </a>
+                  </li>
+                  <li className={styles.listItem}>
+                    <a
+                      href="https://www.linkedin.com/"
+                      target={"_blank"}
+                      rel={"noreferrer"}
+                      className={styles.listItemLink}
+                    >
+                      <FaLinkedinIn className={styles.listSvg} />
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          {/* FORM */}
+          <form
+            autoComplete="off"
+            onSubmit={onSubmitHandler}
+            className={styles.form}
+          >
+            {/* NAME */}
+            <div className={styles.name}>
+              <InputContainer
+                className={styles.nameContainer}
+                htmlFor={"name"}
+                label="YOUR NAME"
+                error={errors?.name?._errors[0]}
+              >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={name}
+                  onChange={nameHandler}
+                  className={styles.inputElem}
+                />
+              </InputContainer>
+              <InputContainer
+                htmlFor={"phone"}
+                label="PHONE"
+                error={errors?.phone?._errors[0]}
+              >
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={phone}
+                  onChange={phoneHandler}
+                  className={styles.inputElem}
+                />
+              </InputContainer>
+            </div>
+            {/* EMAIL */}
+            <InputContainer
+              htmlFor={"email"}
+              label={"EMAIL"}
+              error={errors?.email?._errors[0]}
+            >
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={email}
+                onChange={emailHandler}
+                className={styles.inputElem}
+              />
+            </InputContainer>
 
-          {/* SOCIALS */}
-          <div>
-            <span className={styles.connectSpan}>Find Me</span>
-            <div>
-              <ul className={styles.list}>
-                <li className={styles.listItem}>
-                  <a
-                    href="https://www.facebook.com/"
-                    target={"_blank"}
-                    rel={"noreferrer"}
-                    className={styles.listItemLink}
-                  >
-                    <FaFacebookF className={styles.listSvg} />
-                  </a>
-                </li>
-                <li className={styles.listItem}>
-                  <a
-                    href="https://www.instagram.com/"
-                    target={"_blank"}
-                    rel={"noreferrer"}
-                    className={styles.listItemLink}
-                  >
-                    <FaInstagram className={styles.listSvg} />
-                  </a>
-                </li>
-                <li className={styles.listItem}>
-                  <a
-                    href="https://www.linkedin.com/"
-                    target={"_blank"}
-                    rel={"noreferrer"}
-                    className={styles.listItemLink}
-                  >
-                    <FaLinkedinIn className={styles.listSvg} />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+            {/* SUBJECT */}
+            <InputContainer
+              htmlFor={"subject"}
+              label={"SUBJECT"}
+              error={errors?.subject?._errors[0]}
+            >
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                value={subject}
+                onChange={subjectHandler}
+                className={styles.inputElem}
+              />
+            </InputContainer>
+
+            {/* YOUR MESSAGE */}
+            <InputContainer
+              htmlFor={"message"}
+              label="MESSAGE"
+              error={errors?.message?._errors[0]}
+            >
+              <textarea
+                type="text"
+                id="message"
+                name="message"
+                value={message}
+                onChange={messageHandler}
+                className={`${styles.inputElem} ${styles.textAreaElem}`}
+              />
+            </InputContainer>
+
+            <button disabled={!!errors} className={styles.button}>
+              <span className={styles.buttonSpan}>SEND MESSAGE</span>
+              <FaArrowRight className={styles.buttonSvg} />
+            </button>
+          </form>
         </div>
-        {/* FORM */}
-        <form
-          autoComplete="off"
-          onSubmit={onSubmitHandler}
-          className={styles.form}
-        >
-          {/* NAME */}
-          <div className={styles.name}>
-            <InputContainer
-              className={styles.nameContainer}
-              htmlFor={"name"}
-              label="YOUR NAME"
-              error={errors?.name?._errors[0]}
-            >
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={name}
-                onChange={nameHandler}
-                className={styles.inputElem}
-              />
-            </InputContainer>
-            <InputContainer
-              htmlFor={"phone"}
-              label="PHONE"
-              error={errors?.phone?._errors[0]}
-            >
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={phone}
-                onChange={phoneHandler}
-                className={styles.inputElem}
-              />
-            </InputContainer>
-          </div>
-          {/* EMAIL */}
-          <InputContainer
-            htmlFor={"email"}
-            label={"EMAIL"}
-            error={errors?.email?._errors[0]}
-          >
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={email}
-              onChange={emailHandler}
-              className={styles.inputElem}
-            />
-          </InputContainer>
-
-          {/* SUBJECT */}
-          <InputContainer
-            htmlFor={"subject"}
-            label={"SUBJECT"}
-            error={errors?.subject?._errors[0]}
-          >
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              value={subject}
-              onChange={subjectHandler}
-              className={styles.inputElem}
-            />
-          </InputContainer>
-
-          {/* YOUR MESSAGE */}
-          <InputContainer
-            htmlFor={"message"}
-            label="MESSAGE"
-            error={errors?.message?._errors[0]}
-          >
-            <textarea
-              type="text"
-              id="message"
-              name="message"
-              value={message}
-              onChange={messageHandler}
-              className={`${styles.inputElem} ${styles.textAreaElem}`}
-            />
-          </InputContainer>
-
-          <button disabled={!!errors} className={styles.button}>
-            <span className={styles.buttonSpan}>SEND MESSAGE</span>
-            <FaArrowRight className={styles.buttonSvg} />
-          </button>
-        </form>
-      </div>
-    </Section>
+      </Section>
+      {/* Modal */}
+      {isLoading ? <EmailProgressModal /> : null}
+    </>
   );
 };
 

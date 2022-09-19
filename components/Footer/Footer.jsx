@@ -2,7 +2,7 @@ import Image from "next/image";
 import FooterImage from "../../assets/apoorva.png";
 
 const styles = {
-  container: "py-28 px-0 flex flex-col gap-8 justify-center items-center",
+  container: "py-28 px-0 flex flex-col gap-8 justify-center items-center border-t-2 border-black border-solid",
   imgContainer:
     "relative w-[80px] h-[80px] shadow-custom-one rounded-full overflow-hidden flex items-center justify-center",
   copyrightText: "text-[1.3rem] text-[#c4cfde] text-center",

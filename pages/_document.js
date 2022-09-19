@@ -28,6 +28,8 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
+          <div id="backdrop-portal" />
+          <div id="overlay-portal" />
           <NextScript />
         </body>
       </Html>
