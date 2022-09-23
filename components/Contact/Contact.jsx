@@ -10,6 +10,8 @@ import { z } from "zod";
 import { phoneRegex, addInlineStyles } from "../../utils/utils";
 import { sendContactData } from "../../utils/api";
 import EmailProgressModal from "../EmailProgressModal/EmailProgressModal";
+import NotificationModal from "../NotificationModal/NotificationModal";
+import EmailNotification from "../EmailNotification/EmailNotification";
 
 const styles = {
   section: "relative pb-[7rem] pt-16 border-t-2 border-black border-solid",
@@ -64,8 +66,16 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState([]);
 
+  // loading state for sending the email
   const [isLoading, setIsLoading] = useState(false);
+
+  // email delivery status
+  const [emailDeliveryStatus, setEmailDeliveryStatus] = useState({
+    status: "",
+    message: "",
+  });
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -76,6 +86,26 @@ const Contact = () => {
       addInlineStyles(body, { overflow: "auto" });
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    let timeOut;
+    if (emailDeliveryStatus?.status && emailDeliveryStatus.message) {
+      new Promise((resolve, _) => {
+        timeOut = setTimeout(() => {
+          resolve();
+        }, 8000);
+      })
+        .then(() => {
+          setEmailDeliveryStatus({
+            status: "",
+            message: "",
+          });
+        })
+        .finally(() => {
+          clearTimeout(timeOut);
+        });
+    }
+  }, [emailDeliveryStatus.status, emailDeliveryStatus.message]);
 
   const schema = z.object({
     name: z.string().min(3, { message: "Name is required" }),
@@ -88,7 +118,6 @@ const Contact = () => {
     message: z.string().min(5, { message: "Message is required" }),
   });
 
-  const [errors, setErrors] = useState([]);
   //validate schema
   const validate = () => {
     const result = schema.safeParse({
@@ -124,7 +153,6 @@ const Contact = () => {
   const messageHandler = (e) => {
     setMessage(e.target.value);
     validate();
-    console.log("##errors", errors);
   };
 
   const formReset = () => {
@@ -133,10 +161,14 @@ const Contact = () => {
     setPhone("");
     setMessage("");
     setSubject("");
+    // To disable the submit button
+    setErrors([]);
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    let emailDeliveryStatus;
+    let emailDeliveryMessage;
     try {
       if (!errors) {
         const data = {
@@ -153,15 +185,23 @@ const Contact = () => {
         const { data: contactData, status } = await response;
 
         if (status === 200) {
-          console.log("##contactData", contactData, statusText);
+          emailDeliveryStatus = "Success";
+          emailDeliveryMessage = "Email is delivered successfully.";
           formReset();
         }
       }
     } catch (err) {
       console.log("##Error submitting Contact form", err);
+      emailDeliveryStatus = "Fail";
+      emailDeliveryMessage =
+        "Email delivery failed. Please try again after sometime.";
     }
     // Stop Loading
     setIsLoading(false);
+    setEmailDeliveryStatus({
+      status: emailDeliveryStatus,
+      message: emailDeliveryMessage,
+    });
   };
 
   return (
@@ -324,8 +364,15 @@ const Contact = () => {
           </form>
         </div>
       </Section>
-      {/* Modal */}
+      {/* Email Progress Modal */}
       {isLoading ? <EmailProgressModal /> : null}
+      {/* Notification Modal */}
+      {emailDeliveryStatus?.status && emailDeliveryStatus?.message ? (
+        <NotificationModal
+          message={emailDeliveryStatus.message}
+          render={(message) => <EmailNotification message={message} />}
+        />
+      ) : null}
     </>
   );
 };

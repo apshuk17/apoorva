@@ -30,6 +30,7 @@ class MyDocument extends Document {
           <Main />
           <div id="backdrop-portal" />
           <div id="overlay-portal" />
+          <div id="notification-portal" />
           <NextScript />
         </body>
       </Html>

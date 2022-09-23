@@ -26,6 +26,10 @@ module.exports = {
           "0%": { opacity: 0, transform: "rotate(-5deg)" },
           "100%": { opacity: 1, transform: "rotate(0)" },
         },
+        sneakin: {
+          "0%": { transform: "translateX(1300px)" },
+          "100%": { transform: "none" },
+        }
       },
       animation: {
         "popin-slow": "popin 1s 0.5s ease-out forwards",
@@ -35,6 +39,7 @@ module.exports = {
         "popin-slow-xl": "popin 1s 4s ease-out forwards",
         "fadein-no-delay": "fadein 1s ease-out forwards",
         fadein: "fadein 0.5s 0.5s ease-out forwards",
+        sneakin: "sneakin 2s ease-out forwards"
       },
       backgroundImage: {
         "gradient-light": "linear-gradient(145deg, #1e2024, #23272b)",
