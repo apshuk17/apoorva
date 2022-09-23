@@ -10,15 +10,15 @@ const styles = {
   section: "relative pb-28 pt-16",
   container: "flex flex-col lg:flex-row justify-between gap-14 h-full",
   text: "flex flex-col",
-  animateText:"lg:opacity-0 lg:animate-popin-slow-sm flex flex-col justify-between flex-grow",
+  animateText:
+    "lg:opacity-0 lg:animate-popin-slow-sm flex flex-col justify-between flex-grow",
   welcome:
     "text-[#c4cfde] font-normal text-[1.1rem] tracking-[2px] lg:opacity-0 lg:animate-popin-slow",
   name: "text-white text-[1.5rem] md:text-[2.5rem] xl:text-[60px] font-medium flex flex-col my-4",
   nameColor: "text-[#ff014f]",
   description:
     "text-[#c4cfde] font-normal text-base w-full md:w-[80%] leading-[1.8]",
-  icons:
-    "flex mt-24 gap-8 flex-wrap justify-between",
+  icons: "flex mt-24 gap-8 flex-wrap justify-between",
   iconsSpan: "text-[#c4cfde] block mb-6",
   iconsList: "flex gap-4",
   iconsListItem:
@@ -45,13 +45,11 @@ const Intro = () => {
                   className={styles.nameColor}
                 >{` I'm Apoorva Shukla`}</span>
               </span>
-              <span>a Developer</span>
+              <span>a Web Developer</span>
             </h1>
 
             <p className={styles.description}>
-              I use animation as a third dimension by which to simplify
-              experiences and kuiding thro each and every interaction. I’m not
-              adding motion just to spruce things up, but doing it in ways that.
+              {`I enjoy creating beautiful and performant web applications. I use modern web development architecture based on Javascript, APIs and Markup popularly called JAM stack. Please go through my resume to get more details.`}
             </p>
             {/* SOCIALS */}
             <div className={styles.icons}>

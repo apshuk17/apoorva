@@ -213,22 +213,21 @@ const Contact = () => {
           {/* DETAILS */}
           <div className={styles.connect}>
             {/* <div className={styles.imageContainer}></div> */}
-            <h2 className={styles.connectHeading}>WebDesignTuts</h2>
-            <span className={styles.connectSpan}>Youtube Creator</span>
+            <h2 className={styles.connectHeading}>Contact Details</h2>
+            <span className={styles.connectSpan}>Web Developer</span>
             <span className={styles.connectSpan}>
-              I am available for freelance work. Connect with me via and call in
-              to my account.
+              Connect with me via email and phone.
             </span>
             {/* CONTACT DETAILS */}
             <div className={styles.contact}>
               <div>
                 <span className={styles.connectSpan}>Phone:</span>
-                <span className={styles.connectSpan}>+01234567890</span>
+                <span className={styles.connectSpan}>+919151091004</span>
               </div>
 
               <div>
                 <span className={styles.connectSpan}>Email:</span>
-                <span className={styles.connectSpan}>admin@example.com</span>
+                <span className={styles.connectSpan}>apshuk21@gmail.com</span>
               </div>
             </div>
 
