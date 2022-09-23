@@ -16,7 +16,7 @@ const handler = async (request, response) => {
 
     try {
       const contactEmail = await transporter.sendMail({
-        from: email,
+        from: `Apoorva Shukla <${email}>`,
         to: process.env.EMAIL_OWNER,
         subject: `New Contact Details - ${subject}`,
         text: message,
