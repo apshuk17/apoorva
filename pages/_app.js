@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Apoorva</title>
         <meta name="description" content="A personal blog" />
-        <meta name="viewport" content="width=device-width, initialScale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="scroll-smooth font-poppins">

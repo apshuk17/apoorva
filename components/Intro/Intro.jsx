@@ -2,9 +2,9 @@ import Image from "next/image";
 import Section from "../Section/Section";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import IntroBanner from "../../assets/apoorvaHD.png";
-import IconOne from "../../assets/icons-01.png";
-import IconTwo from "../../assets/icons-02.png";
-import IconThree from "../../assets/icons-03.png";
+// import IconOne from "../../assets/icons-01.png";
+// import IconTwo from "../../assets/icons-02.png";
+// import IconThree from "../../assets/icons-03.png";
 
 const styles = {
   section: "relative pb-28 pt-16",
@@ -58,8 +58,7 @@ const Intro = () => {
                 <ul className={styles.iconsList}>
                   <li className={styles.iconsListItem}>
                     <a
-                      href="https://www.facebook.com/"
-                      target={"_blank"}
+                      href="#"
                       rel={"noreferrer"}
                       className={styles.iconsListItemLink}
                     >
@@ -68,8 +67,7 @@ const Intro = () => {
                   </li>
                   <li className={styles.iconsListItem}>
                     <a
-                      href="https://www.instagram.com/"
-                      target={"_blank"}
+                      href="#"
                       rel={"noreferrer"}
                       className={styles.iconsListItemLink}
                     >
@@ -78,8 +76,7 @@ const Intro = () => {
                   </li>
                   <li className={styles.iconsListItem}>
                     <a
-                      href="https://www.linkedin.com/"
-                      target={"_blank"}
+                      href="#"
                       rel={"noreferrer"}
                       className={styles.iconsListItemLink}
                     >
@@ -88,7 +85,7 @@ const Intro = () => {
                   </li>
                 </ul>
               </div>
-              <div>
+              {/* <div>
                 <span className={styles.iconsSpan}>Best Skills</span>
                 <ul className={styles.iconsList}>
                   <li className={styles.iconsListItem}>
@@ -108,7 +105,7 @@ const Intro = () => {
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -121,7 +118,8 @@ const Intro = () => {
               height="100%"
               layout="responsive"
               objectFit="contain"
-              alt=""
+              alt="Apoorva Shukla, a web developer"
+              priority={true}
             />
           </div>
         </div>
