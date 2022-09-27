@@ -80,7 +80,7 @@ const Navbar = () => {
           </li>
           <li className={styles.navListItem}>
             <Link href="#portofolio">
-              <a className={`${styles.navListLinkItem}`}>Portofolio</a>
+              <a className={`${styles.navListLinkItem}`}>Technologies</a>
             </Link>
           </li>
           <li className={styles.navListItem}>
@@ -130,23 +130,13 @@ const Navbar = () => {
                 </Link>
               </li>
               <li onClick={() => setIsActive(false)}>
-                <Link href="#features">
-                  <a className={styles.mobileNavListLink}>Features</a>
-                </Link>
-              </li>
-              <li onClick={() => setIsActive(false)}>
                 <Link href="#portofolio">
-                  <a className={styles.mobileNavListLink}>Portofolio</a>
+                  <a className={styles.mobileNavListLink}>Technologies</a>
                 </Link>
               </li>
               <li onClick={() => setIsActive(false)}>
                 <Link href="#resume">
                   <a className={styles.mobileNavListLink}>Resume</a>
-                </Link>
-              </li>
-              <li onClick={() => setIsActive(false)}>
-                <Link href="#pricing">
-                  <a className={styles.mobileNavListLink}>Pricing</a>
                 </Link>
               </li>
               <li onClick={() => setIsActive(false)}>

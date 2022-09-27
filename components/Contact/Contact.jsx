@@ -16,7 +16,7 @@ import EmailNotification from "../EmailNotification/EmailNotification";
 const styles = {
   section: "relative pb-[7rem] pt-16 border-t-2 border-black border-solid",
   subtitle: "block text-[#f9004d] mb-4 text-center",
-  title: "text-[#c4cfde] text-[3.5rem] mb-10 text-center font-bold",
+  title: "text-[#c4cfde] text-5xl lg:text-6xl mb-10 text-center font-bold",
   container: "flex flex-col gap-16 lg:flex-row",
   connect: "w-full lg:w-[60%] shadow-custom-one p-8",
   connectHeading: "text-[29px] leading-[44px] text-[#c4cfde] mb-[0.7rem]",
@@ -208,7 +208,7 @@ const Contact = () => {
     <>
       <Section className={styles.section} id="contact">
         <span className={styles.subtitle}>Contact</span>
-        <h1 className={styles.title}>Contact With Me</h1>
+        <h2 className={styles.title}>Contact With Me</h2>
         <div className={styles.container}>
           {/* DETAILS */}
           <div className={styles.connect}>
@@ -225,10 +225,10 @@ const Contact = () => {
                 <span className={styles.connectSpan}>+919151091004</span>
               </div>
 
-              <div>
+              {/* <div>
                 <span className={styles.connectSpan}>Email:</span>
                 <span className={styles.connectSpan}>apshuk21@gmail.com</span>
-              </div>
+              </div> */}
             </div>
 
             {/* SOCIALS */}

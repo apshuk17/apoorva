@@ -28,18 +28,18 @@ const PortfolioCard = ({ imageSource, category, likes, description }) => {
           <div className={styles.imageContainer}>
             <Image
               src={imageSource}
-              objectFit="cover"
+              objectFit="contain"
               layout="fill"
-              alt=""
+              alt={description}
             />
           </div>
-          <div className={styles.info}>
+          {/* <div className={styles.info}>
             <span className={styles.category}>{category}</span>
             <div className={styles.likes}>
               <FaHeart />
               <span>{likes}</span>
             </div>
-          </div>
+          </div> */}
           <h2 className={styles.heading2}>{description}</h2>
         </button>
       </Fade>
